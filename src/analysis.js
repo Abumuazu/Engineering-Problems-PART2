@@ -16,23 +16,22 @@ async function analysis() {
   let noOfDriversWithMoreThanOneVehicle = 0;
 
   for (let trips of getTrip) {
-    console.log(trips);
+   
     arrayOfTripsDriverID.push(trips.driverID);
   }
-  console.log(arrayOfTripsDriverID.length);
+
   let errTripDriverId = arrayOfTripsDriverID.pop();
   let uniqueDriverID = new Set([...arrayOfTripsDriverID]);
-  console.log(arrayOfTripsDriverID.length);
-  console.log(uniqueDriverID);
+
 
   Array.from(uniqueDriverID).map(async (value, index) => {
-    console.log(value);
+   
     driverID.push(getDriver(value));
   });
-  console.log(driverID);
+
   //resolving promise with async await
   let resolvedDriverID = await Promise.all(driverID);
-  console.log(resolvedDriverID);
+  
   // Loop to get drivers with more than one vehicle
   resolvedDriverID.map((data) => {
     if (data.vehicleID.length > 1) {
@@ -42,40 +41,37 @@ async function analysis() {
   // Loop to get the number of trips by each driver
   let tripCounter = {};
   arrayOfTripsDriverID.map((data) => {
-    console.log(data);
+  
     tripCounter[data] ? (tripCounter[data] += 1) : (tripCounter[data] = 1);
   });
-  console.log(tripCounter);
+
 
   let highestTrips = Math.max(...Object.values(tripCounter));
   console.log(highestTrips);
   let highestTripsIndex = Object.values(tripCounter).indexOf(highestTrips);
   let highestTripsDriver = Object.keys(tripCounter)[highestTripsIndex];
-  console.log(highestTripsDriver);
-  console.log(highestTripsIndex);
+
   // Using the utility function to get the driver Earnings initially stored in an array
   let driverEarnings = calculatedTrips.amountEarnedByDriver;
-  console.log(driverEarnings);
+
   let totalAmountEarned = driverEarnings[highestTripsDriver];
   console.log(totalAmountEarned);
   // Using ES6 to destructure driver info
   let mostTripsByDriver = resolvedDriverID[highestTripsIndex];
-  console.log(mostTripsByDriver);
+  
   const { name, email, phone } = mostTripsByDriver;
   // getting driver with the highest Earnings
   let earningsObject = Object.assign({}, driverEarnings);
-  console.log(earningsObject);
+  
   let maxEarnings = Math.max(...Object.values(earningsObject));
-  console.log(maxEarnings);
-  let maxEarningDriverIndex =
-    Object.values(earningsObject).indexOf(maxEarnings);
-  console.log(maxEarningDriverIndex);
+  
+  let maxEarningDriverIndex =  Object.values(earningsObject).indexOf(maxEarnings);
+ 
   let maxEarningDriver = Object.keys(earningsObject)[highestTripsIndex];
-  console.log(maxEarningDriver);
-  console.log(resolvedDriverID);
+
   // // using ES6 to destructure hihgest earning driver info
   let highestEarningDriver = resolvedDriverID[maxEarningDriverIndex];
-  console.log(highestEarningDriver);
+  
   let noOfTrips2 = Object.values(tripCounter)[highestTripsIndex];
   console.log(noOfTrips2);
   // getting trips by highest earning driver
@@ -113,7 +109,7 @@ async function analysis() {
     };
   }, {});
 }
-console.log(analysis());
+analysis();
 
 //Utility function 1
 /**
@@ -122,7 +118,7 @@ console.log(analysis());
  * @returns {object}
  */
 const calculateTrips = (getTrip) => {
-  console.log(getTrip);
+  
   let cashTrips = 0;
   let nonCashTrips = 0;
   let billedTotal = 0;
@@ -149,7 +145,7 @@ const calculateTrips = (getTrip) => {
       nonCashBilledTotal += resolvedBills;
     }
   }
-  console.log(amountEarnedByDriver);
+
   // Second loop to
 
   return {

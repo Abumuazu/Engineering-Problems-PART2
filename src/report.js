@@ -24,7 +24,7 @@ async function driverReport() {
 // loop to extract the number of trip of each driver 
 let tripCounter = {}
 tripDriverID.map(data => {
-  console.log(data)
+  
   tripCounter[data] ? tripCounter[data] += 1 : tripCounter[data] =1
 })
 // getting the noOfTrips in and array 
@@ -32,10 +32,10 @@ let arrayOfNoOfTrips = Object.values(tripCounter)
 
 // getting the unique Id of drivers from getTrips
   let uniqueTripID = [...new Set(tripDriverID)]
-console.log(uniqueTripID)
+
 // resolving driverID promise
 let catchErrDriverID = await Promise.allSettled(driverID)
-console.log(catchErrDriverID)
+
     // loop to extract only resolver/Valid driverId from
     let resolvedDriverInfo = []
     catchErrDriverID.forEach((data, index) =>{
@@ -43,21 +43,21 @@ console.log(catchErrDriverID)
         resolvedDriverInfo.push(data.value)
       }
     })
-    console.log(resolvedDriverInfo)
+
     // loop to get number of vehicles in an array
     let noOfVehicles =[]
     let vehicles = []
     resolvedDriverInfo.map((data) => {
-      console.log(data.vehicleID)
+    
       let vehicleNum = data.vehicleID.length
       noOfVehicles.push(vehicleNum)
       let vehicleArray = [data.vehicleID]
 
       for (let ids of vehicleArray) {
         for (let id of ids  ){
-          console.log(id)
+          
           let getVehicles = getVehicle(id)
-          getVehicles
+       
           // const {manufacturer, plate } = getVehicles
           vehicles.push(getVehicles)
           // vehicle.push(await getVehicles)
@@ -71,14 +71,14 @@ console.log(catchErrDriverID)
     //Looping thrpugh resolvedVehicle to destructure just manufacturer and plate , which is what we need to
       let vehiclesInfo = []
     resolvedVehicles.map(data => {
-      console.log(data)
+      
       const {plate, manufacturer} = data
       vehiclesInfo.push( {plate, manufacturer})
     })
-    vehiclesInfo
+   
     // geting Unique Driver Info from resolvedDriverInfo
     let uniqueDriverID = [...new Set(resolvedDriverInfo)]
-    console.log(uniqueDriverID)
+    
 
 
 
@@ -105,16 +105,14 @@ console.log(catchErrDriverID)
 console.log(driverReport())
 
 
-
-
 //Utility function 1
 /**
- * function to calculate the number of cashTrips, non cash trips , from getTrip dataBase
+ * function to calculate the number of cashTrips, non cash trips , from getTrip dataBase Per Driver
  * @param {Object}
  * @returns {object}
  */
  const calculateIndividualTrips = (getTrip) => {
-  console.log(getTrip);
+  
   
   let cashTripCounter = {}
   let nonCashTripCounter = {}
@@ -182,7 +180,7 @@ console.log(driverReport())
   let totalNonCashAmount = Object.values(totalNonCashAmountCounter)
   let infoPerTripKeys = Object.values(infoPerTrip )
 
-  console.log(infoPerTrip);
+
   return  {
     noOfCashTrips: noOfCashTrips,
     noOfnonCashTrips: noOfnonCashTrips,
@@ -196,35 +194,3 @@ console.log(driverReport())
 }
 
 module.exports = driverReport;
-// [
-//   {
-//     "fullName": "Driver name",
-//     "id": "driver-id",
-//     "phone": "driver phone",
-//     "noOfTrips": 20,
-//     "noOfVehicles": 2,
-//     "vehicles": [
-//       {
-//         "plate": "vehicle plate no",
-//         "manufacturer": "vehicle manufacturer"
-//       }
-//     ],
-    // "noOfCashTrips": 5,
-    // "noOfNonCashTrips": 6,
-//     "totalAmountEarned": 1000,
-//     "totalCashAmount": 100,
-//     "totalNonCashAmount": 500,
-//     "trips": [
-//       {
-//         "user": "User name",
-//         "created": "Date Created",
-//         "pickup": "Pickup address",
-//         "destination": "Destination address",
-//         "billed": 1000,
-//         "isCash": true
-//       }
-//       // ,... {}, {}
-//     ]
-//   }
-//   // ,...{}, {}
-// ]
